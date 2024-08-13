@@ -1,39 +1,45 @@
-import React, {useState, useEffect} from "react";
-import profile from "../assets/profile.png";
-const isElementInViewport = (el) => {
-  const rect = el.getBoundingClientRect();
-  return (
-    rect.top >= 0 &&
-    rect.left >= 0 &&
-    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-  );
-};
+import React, { useState, useEffect } from "react";
+
+// const isElementInViewport = (el, threshold = 0.7) => {
+//   const rect = el.getBoundingClientRect();
+//   const viewportHeight =
+//     window.innerHeight || document.documentElement.clientHeight;
+
+//   const elementVisibleHeight = Math.max(
+//     0,
+//     Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0)
+//   );
+//   const elementHeight = elementVisibleHeight/rect.height;
+
+//   return elementHeight >= threshold;
+// };
+
 export default function Homepage() {
-  const [isVisible, setIsVisible] = useState({
-    slideSide: false,
-    popup: false,
-    slideLeft: false
-  });
+//   const [isVisible, setIsVisible] = useState({
+//     slideSide: false,
+//     popup: false,
+//     slideLeft: false,
+//   });
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const slideSide = document.querySelector('.slideSide');
-      const popup = document.querySelector('.popup');
-      const slideLeft = document.querySelector('.slideLeft');
+//   useEffect(() => {
+//     const handleScroll = () => {
+//       const slideSide = document.querySelector(".slideSide");
+//       const popup = document.querySelector(".popup");
+//       const slideLeft = document.querySelector(".slideLeft");
 
-      setIsVisible({
-        slideSide: slideSide && isElementInViewport(slideSide),
-        popup: popup && isElementInViewport(popup),
-        slideLeft: slideLeft && isElementInViewport(slideLeft)
-      });
-    };
+//       setIsVisible({
+//         slideSide: slideSide && isElementInViewport(slideSide, 1),
+//         popup: popup && isElementInViewport(popup, 1),
+//         slideLeft: slideLeft && isElementInViewport(slideLeft, 0.5),
+//       });
+//     };
 
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial check
-
-   
-  }, []);
+//     window.addEventListener("scroll", handleScroll);
+//     handleScroll();
+//     return () => {
+//       window.removeEventListener("scroll", handleScroll);
+//     };
+//   }, []);
 
   return (
     <div className="homepage" id="home">
@@ -51,13 +57,15 @@ export default function Homepage() {
           <li></li>
         </ul>
         <div className="homepageIntro">
-        <h1 className={`popup ${isVisible.popup ? 'visible' : ''}`}>
+          <h1 > {/* className={`popup ${isVisible.popup ? "visible" : ""}`}*/}
             <span className="intro introHi">Hi,</span>
             <span className="intro">I'm </span>
             <span className="intro introAyush"> Ayush</span>
             <span className="intro">Web Developer</span>
           </h1>
-          <div className={`homepageSocials slideSide ${isVisible.slideSide ? 'visible':''}`}>
+          <div
+            className="homepageSocials"
+          >
             <a
               href="https://github.com/ayush-cp"
               className="socials"
@@ -93,9 +101,11 @@ export default function Homepage() {
             </a>
           </div>
         </div>
-        <div className={`homepageImage popup ${isVisible.popup ? 'visible' : ''}`}>
+        <div
+          className= "homepageImage"
+        >
           <div className="profileImage">
-            <img src={profile} alt="" />
+            {/* <img src={profile} alt="" /> */}
           </div>
         </div>
       </div>

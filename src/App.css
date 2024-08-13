@@ -160,7 +160,7 @@ html{
   transition: 0.2s ease-in;
 }
 .introAyush:hover{
-  color: rgb(188, 238, 231);
+  /* color: rgb(188, 238, 231); */
   -webkit-text-stroke: 2px rgb(1,1,92);
   text-shadow: 1px 1px 10px rgb(171, 225, 221);
 }
@@ -230,12 +230,15 @@ html{
   z-index: 2;
   position: relative;
   background-color: #17153B;
+  background-image: url(./assets/profile.png);
+  background-size: cover;
+  background-position: top;
   overflow: hidden;
   top: 10%;
 }
-.profileImage img{
+/* .profileImage img{
   width: 100%;
-}
+} */
 
 /* load effects */
 
@@ -243,12 +246,15 @@ html{
 .popup {
   transform: scale(0.5);
   opacity: 0;
-  transition: 0.8s ease-in;
+  filter: blur(5px);
+  transition: 0.6s ease-in;
 }
 
 .popup.visible {
   opacity: 1;
   transform: scale(1);
+  filter: blur(0px);
+
 
 }
 .slideSide {
