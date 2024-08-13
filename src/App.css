@@ -237,6 +237,38 @@ html{
   width: 100%;
 }
 
+/* load effects */
+
+
+.popup {
+  transform: scale(0.5);
+  opacity: 0;
+  transition: 0.8s ease-in;
+}
+
+.popup.visible {
+  opacity: 1;
+  transform: scale(1);
+
+}
+.slideSide {
+  transform: translateY(100%);
+  opacity: 0;
+  transition: 0.8s ease-in;
+}
+.slideSide.visible{
+  opacity: 1;
+  transform: translateY(0%);
+}
+.slideLeft{
+  transform: translateX(-100%);
+  opacity: 0;
+}
+.slideLeft.visible {
+  transform: translateX(-0%);
+  opacity: 1;
+}
+
 @media (max-width:1000px){
   .intro{
     font-size: 9vw;
