@@ -1,45 +1,19 @@
-import React, { useState, useEffect } from "react";
-
-// const isElementInViewport = (el, threshold = 0.7) => {
-//   const rect = el.getBoundingClientRect();
-//   const viewportHeight =
-//     window.innerHeight || document.documentElement.clientHeight;
-
-//   const elementVisibleHeight = Math.max(
-//     0,
-//     Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0)
-//   );
-//   const elementHeight = elementVisibleHeight/rect.height;
-
-//   return elementHeight >= threshold;
-// };
+import React, { useRef } from 'react';
+import { useElementOnScreen } from './intersectionObserver'; 
 
 export default function Homepage() {
-//   const [isVisible, setIsVisible] = useState({
-//     slideSide: false,
-//     popup: false,
-//     slideLeft: false,
-//   });
+  const headerRef = useRef(null);
+  const imageRef = useRef(null);
 
-//   useEffect(() => {
-//     const handleScroll = () => {
-//       const slideSide = document.querySelector(".slideSide");
-//       const popup = document.querySelector(".popup");
-//       const slideLeft = document.querySelector(".slideLeft");
+  const isHeaderVisible = useElementOnScreen(headerRef, {
+    threshold: 0.5,
+    rootMargin: '0px'
+  });
 
-//       setIsVisible({
-//         slideSide: slideSide && isElementInViewport(slideSide, 1),
-//         popup: popup && isElementInViewport(popup, 1),
-//         slideLeft: slideLeft && isElementInViewport(slideLeft, 0.5),
-//       });
-//     };
-
-//     window.addEventListener("scroll", handleScroll);
-//     handleScroll();
-//     return () => {
-//       window.removeEventListener("scroll", handleScroll);
-//     };
-//   }, []);
+  const isImageVisible = useElementOnScreen(imageRef, {
+    threshold: 0.5,
+    rootMargin: '0px'
+  });
 
   return (
     <div className="homepage" id="home">
@@ -57,15 +31,13 @@ export default function Homepage() {
           <li></li>
         </ul>
         <div className="homepageIntro">
-          <h1 > {/* className={`popup ${isVisible.popup ? "visible" : ""}`}*/}
+          <h1 ref={headerRef} className={`slideLeft ${isHeaderVisible ? 'visible' : ''}`}>
             <span className="intro introHi">Hi,</span>
             <span className="intro">I'm </span>
             <span className="intro introAyush"> Ayush</span>
             <span className="intro">Web Developer</span>
           </h1>
-          <div
-            className="homepageSocials"
-          >
+          <div className="homepageSocials">
             <a
               href="https://github.com/ayush-cp"
               className="socials"
@@ -101,10 +73,8 @@ export default function Homepage() {
             </a>
           </div>
         </div>
-        <div
-          className= "homepageImage"
-        >
-          <div className="profileImage">
+        <div className="homepageImage">
+          <div className={`profileImage popup ${isImageVisible ? 'visible' : ''}`} ref={imageRef}>
             {/* <img src={profile} alt="" /> */}
           </div>
         </div>

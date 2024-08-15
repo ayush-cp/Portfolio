@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import emailjs from 'emailjs-com';
+import { useElementOnScreen } from './intersectionObserver';
 
 export default function ContactMe() {
   const [formData, setFormData] = useState({
@@ -33,13 +34,27 @@ export default function ContactMe() {
       }
     );
   };
-
+  const contacts = ['name', 'email', 'subject','description']
+  const refs = useRef(contacts.map(() => React.createRef()));
+  const isContactVisible = refs.current.map((ref) =>
+    useElementOnScreen(ref, { threshold: 0.5, rootMargin: "0px 0px 0px 0px" })
+  );
+  const headerRef = useRef(null);
+  const buttonRef = useRef(null)
+  const isHeaderVisible = useElementOnScreen(headerRef, {
+    threshold: 0.5,
+    rootMargin: '0px'
+  })
+  const isButtonVisible = useElementOnScreen(buttonRef, {
+    threshold: 0.5,
+    rootMargin: '0px'
+  })
   return (
     <div className='contact' id='contactme'>
       <div className="contactMain">
-        <h1>Contact Me</h1>
+        <h1 ref={headerRef} className={`popup ${isHeaderVisible? 'visible' :''}`}>Contact Me</h1>
         <form className='contactForm' onSubmit={handleSubmit}>
-          <div className="formSection">
+          <div className={`formSection slideLeft ${isContactVisible[0] ? 'visible' :'' }`} ref={refs.current[0] }>
             <label htmlFor="name">Name:</label>
             <input
               type="text"
@@ -51,7 +66,7 @@ export default function ContactMe() {
               required
             />
           </div>
-          <div className="formSection">
+          <div className={`formSection slideLeft ${isContactVisible[1] ? 'visible' :'' }`} ref={refs.current[1] }>
             <label htmlFor="email">Email:</label>
             <input
               type="email"
@@ -63,7 +78,7 @@ export default function ContactMe() {
               required
             />
           </div>
-          <div className="formSection">
+          <div className={`formSection slideLeft ${isContactVisible[2] ? 'visible' :'' }`} ref={refs.current[2] }>
             <label htmlFor="subject">Subject:</label>
             <input
               type="text"
@@ -75,7 +90,7 @@ export default function ContactMe() {
               required
             />
           </div>
-          <div className="formSection">
+          <div className={`formSection slideLeft ${isContactVisible[3] ? 'visible' :'' }`} ref={refs.current[3] }>
             <label htmlFor="desc">Message:</label>
             <textarea
               id="desc"
@@ -87,8 +102,8 @@ export default function ContactMe() {
               required
             />
           </div>
-          <div className="formSubmit">
-            <button type='submit'>Submit</button>
+          <div ref={buttonRef} className={`formSubmit popup ${isButtonVisible? 'visible':''}`}>
+            <button type='submit' >Submit</button>
           </div>
           {responseMessage && <div className="responseMessage">{responseMessage}</div>}
         </form>
